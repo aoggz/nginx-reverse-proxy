@@ -15,7 +15,6 @@ The container expects the following environment variables to be present:
 - `LOCALITY`: used for the certificate generation.
 - `ORGANIZATION`: used for the certificate generation.
 - `ORGANIZATIONAL_UNIT`: used for the certificate generation.
-- `DOMAIN`: used for the certificate generation.
 - `EMAIL_ADDRESS`: used for the certificate generation.
 
 ### In `docker-compose.yml`
@@ -28,7 +27,7 @@ services:
     expose:
       - "80"
   reverse_proxy:
-    image: registry.gitlab.zoll-lifevest.com/lvn/devops/docker-images/nginx-reverse-proxy:latest
+    image: aoggz/nginx-reverse-proxy:latest
     expose:
       - "443:443"
     environment:
@@ -39,7 +38,6 @@ services:
       - LOCALITY
       - ORGANIZATION
       - ORGANIZATIONAL_UNIT
-      - DOMAIN
       - EMAIL_ADDRESS
     links:
       - web
@@ -64,7 +62,7 @@ services:
   {
     "name": "reverse_proxy",
     "cpu": 8675309,
-    "image": "ecr_repository_url_here:latest",
+    "image": "aoggz/nginx-reverse-proxy:latest",
     "memory": 8675309,
     "essential": true,
     "portMappings": [
@@ -97,10 +95,6 @@ services:
       {
         "name": "ORGANIZATIONAL_UNIT",
         "value": "Testing enterprises, ltd."
-      },
-      {
-        "name": "DOMAIN",
-        "value": "test.com"
       },
       {
         "name": "EMAIL_ADDRESS",
