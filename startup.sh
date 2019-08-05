@@ -33,11 +33,10 @@ http {
     }
 
     server {
-        listen 443;
+        listen 443 ssl;
 
         server_name localhost;
 
-        ssl    on;
         ssl_certificate /etc/ssl/private/cert.pem;
         ssl_certificate_key /etc/ssl/private/key.pem;
 
