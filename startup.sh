@@ -20,6 +20,12 @@ openssl req -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZ
 
 echo "Using proxy address of $PROXY_ADDRESS"
 
+timeout="60"
+if [!  -z "$TIMEOUT_SECONDS" ]
+then
+  timeout=$TIMEOUT_SECONDS
+fi
+
 cat <<EOF > /etc/nginx/nginx.conf
 worker_processes 4;
  
@@ -51,6 +57,11 @@ http {
             proxy_buffer_size       128k;
             proxy_buffers           4 256k;
             proxy_busy_buffers_size 256k;
+
+            proxy_connect_timeout   $timeout;
+            proxy_send_timeout      $timeout;
+            proxy_read_timeout      $timeout;
+            send_timeout            $timeout;
         }
     }
 }
